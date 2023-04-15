@@ -30,7 +30,7 @@ jobs:
 
   linux:
     name: Test linuxX64
-    runs-on: linux
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -46,8 +46,8 @@ jobs:
           arguments: :cleanNativeTest :nativeTest
 
   android:
-    name: Test android
-    runs-on: android/android
+    name: Test Windows
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -60,7 +60,7 @@ jobs:
         id: gradle-test
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :cleanJvmTest :jvmTest
+          arguments: :cleanNativeTest :nativeTest
 
 #  build:
 #    name: Build
