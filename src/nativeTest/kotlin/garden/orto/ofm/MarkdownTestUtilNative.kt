@@ -45,3 +45,15 @@ actual fun getIntellijMarkdownHome(): String {
     return intellijMarkdownHome.value
 }
 
+
+actual abstract class TestCase {
+    actual fun getName(): String {
+        try {
+            throw Exception()
+        } catch (e: Exception) {
+            val stack = e.getStackTrace()
+            val re = Regex("""(?:kfun:)?garden\.orto\.ofm\.\w+Test#(test\w+)\(""")
+            return stack.firstNotNullOf { re.find(it)?.groupValues?.get(1) }
+        }
+    }
+}

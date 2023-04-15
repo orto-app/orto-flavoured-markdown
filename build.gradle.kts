@@ -63,16 +63,11 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val fileBasedTest by creating {
-            dependsOn(commonTest)
-        }
         val jvmMain by getting
         val jvmTest by getting {
-            dependsOn(fileBasedTest)
         }
         val jsMain by getting
         val jsTest by getting {
-            dependsOn(fileBasedTest)
         }
         val nativeMain by creating {
             dependsOn(commonMain)
@@ -89,7 +84,6 @@ kotlin {
         listOf("linuxX64", "mingwX64", "macosX64", "macosArm64").forEach { target ->
             val sourceSet = getByName("${target}Test")
             sourceSet.dependsOn(nativeTest)
-            sourceSet.dependsOn(fileBasedTest)
         }
         val iosTest by getting {
         }
