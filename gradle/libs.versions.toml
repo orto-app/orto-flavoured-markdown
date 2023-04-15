@@ -1,0 +1,12 @@
+[versions]
+# libraries
+markdown = "0.4.1"
+
+# plugins
+multiplatform = "1.8.10"
+
+[libraries]
+markdown = { group = "org.jetbrains", name = "markdown", version.ref = "markdown" }
+
+[plugins]
+#multiplatform = { id = "multiplatform", version.ref = "multiplatform" }
