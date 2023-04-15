@@ -53,11 +53,8 @@ class MarkdownParsingTest : TestCase() {
 
     @Test
     fun testTags() {
-        val src = readFromFile(getTestDataPath()+ "test.md")
-        val tree = parseMarkdown(src)
-
-
-        assertEquals("Markdown:MARKDOWN_FILE", getParsedTreeText(""))
+        val src = readFromFile(getTestDataPath() + "test.md")
+        assertEquals(setOf(",", "parole,", "tag,", "anche", "in/mezzo.", "tanti", "test/esaus", "tivi"), getTags(src))
     }
 //
 //    @Test
@@ -351,6 +348,6 @@ Markdown:MARKDOWN_FILE
 //    }
 
     private fun getTestDataPath(): String {
-        return getIntellijMarkdownHome() + "/${MARKDOWN_TEST_DATA_PATH}/parser"
+        return getIntellijMarkdownHome() + "/${MARKDOWN_TEST_DATA_PATH}/parser/"
     }
 }
