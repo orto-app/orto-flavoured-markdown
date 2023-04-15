@@ -26,7 +26,7 @@ jobs:
         id: gradle-test
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :cleanNativeTest :nativeTest
+          arguments: check
 
   linux:
     name: Test linuxX64
@@ -43,7 +43,7 @@ jobs:
         id: gradle-test
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :cleanNativeTest :nativeTest
+          arguments: check
 
   android:
     name: Test Windows
@@ -60,25 +60,4 @@ jobs:
         id: gradle-test
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :cleanNativeTest :nativeTest
-
-#  build:
-#    name: Build
-#    runs-on: macos-12
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-#      - uses: actions/setup-java@v1
-#        with:
-#          java-version: ${{ env.JAVA_VERSION }}
-#
-#      - uses: maxim-lobanov/setup-xcode@v1
-#        with:
-#          xcode-version: ${{ env.XCODE_VERSION }}
-#
-#      - name: Build Shared artifacts
-#        id: gradle-build
-#        uses: gradle/gradle-build-action@v2
-#        with:
-#          arguments: :shared:build
+          arguments: check
