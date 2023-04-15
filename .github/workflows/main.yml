@@ -9,6 +9,7 @@ on:
 env:
   XCODE_VERSION: '13.4.1'
   JAVA_VERSION: '14'
+  NODE_VERSION: '18'
 
 jobs:
   ios:
@@ -56,14 +57,34 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: GitHub Action for Yarn
-        uses: Borales/actions-yarn@v4.2.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - run: npm install yarn
 
       - name: Run Test
         id: gradle-test
         uses: gradle/gradle-build-action@v2
         with:
           arguments: :jsNodeTest
+
+  jvm:
+    name: Test JVM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Run Test
+        id: gradle-test
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: :jvmTest
 
   linux:
     name: Test linuxX64
