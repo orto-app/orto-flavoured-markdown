@@ -1,5 +1,6 @@
-package garden.orto.markdown.flavours.lexer;
+package garden.orto.ofm.lexer;
 
+import garden.orto.ofm.OFMTokenTypes;
 import org.intellij.markdown.MarkdownTokenTypes;
 import org.intellij.markdown.flavours.gfm.GFMTokenTypes;
 import org.intellij.markdown.IElementType;
@@ -18,9 +19,7 @@ import org.intellij.markdown.lexer.GeneratedLexer;
 %implements GeneratedLexer
 
 %{
-  private static class Token extends MarkdownTokenTypes {
-      public static IElementType ORTO_TAG = MarkdownElementType("ORTO_TAG", true);
-  }
+  private static class Token extends MarkdownTokenTypes {}
 
   private List<Integer> stateStack = new ArrayList<Integer>();
 
@@ -81,6 +80,7 @@ import org.intellij.markdown.lexer.GeneratedLexer;
 
     parseDelimited.exitChar = last;
     parseDelimited.returnType = contentsType;
+//    parseDelimited.inlinesAllowed = allowInlines;
     parseDelimited.inlinesAllowed = true;
 
     yybegin(PARSE_DELIMITED);
@@ -213,6 +213,8 @@ ALPHANUM = [\p{Letter}\p{Number}]
 WHITE_SPACE = [ \t\f]
 EOL = \R
 ANY_CHAR = [^]
+
+ORTO_TAG = #[^\n\t\f\r ]+
 
 DOUBLE_QUOTED_TEXT = \" (\\\" | [^\n\"])* \"
 SINGLE_QUOTED_TEXT = "'" (\\"'" | [^\n'])* "'"
@@ -368,5 +370,7 @@ GFM_AUTOLINK = (("http" "s"? | "ftp" | "file")"://" | "www.") {HOST_PART} ("." {
   }
 
 }
+
+{ORTO_TAG} { return OFMTokenTypes.ORTO_TAG; }
 
 {ANY_CHAR} { return MarkdownTokenTypes.TEXT; }
