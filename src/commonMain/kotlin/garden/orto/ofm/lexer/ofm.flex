@@ -1,8 +1,8 @@
-package garden.orto.ofm.lexer;
+package org.intellij.markdown.flavours.gfm.lexer;
 
-import garden.orto.ofm.OFMTokenTypes;
 import org.intellij.markdown.MarkdownTokenTypes;
 import org.intellij.markdown.flavours.gfm.GFMTokenTypes;
+import org.intellij.markdown.flavours.gfm.OFMTokenTypes;
 import org.intellij.markdown.IElementType;
 import org.intellij.markdown.lexer.GeneratedLexer;
 
@@ -214,8 +214,6 @@ WHITE_SPACE = [ \t\f]
 EOL = \R
 ANY_CHAR = [^]
 
-ORTO_TAG = #[^\n\t\f\r ]+
-
 DOUBLE_QUOTED_TEXT = \" (\\\" | [^\n\"])* \"
 SINGLE_QUOTED_TEXT = "'" (\\"'" | [^\n'])* "'"
 QUOTED_TEXT = {SINGLE_QUOTED_TEXT} | {DOUBLE_QUOTED_TEXT}
@@ -349,6 +347,11 @@ GFM_AUTOLINK = (("http" "s"? | "ftp" | "file")"://" | "www.") {HOST_PART} ("." {
     return MarkdownTokenTypes.TEXT;
   }
 
+  // Orto tags
+  "#"[^# \t\f\n\r]+ {
+      return OFMTokenTypes.ORTO_TAG;
+    }
+
   // optimize and eat underscores inside words
   {ALPHANUM}+ (({WHITE_SPACE}+ | "_"+) {ALPHANUM}+)* {
     return MarkdownTokenTypes.TEXT;
@@ -370,7 +373,5 @@ GFM_AUTOLINK = (("http" "s"? | "ftp" | "file")"://" | "www.") {HOST_PART} ("." {
   }
 
 }
-
-{ORTO_TAG} { return OFMTokenTypes.ORTO_TAG; }
 
 {ANY_CHAR} { return MarkdownTokenTypes.TEXT; }

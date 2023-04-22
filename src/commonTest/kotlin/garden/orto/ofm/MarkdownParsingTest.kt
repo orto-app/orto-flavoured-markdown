@@ -2,11 +2,6 @@ package garden.orto.ofm
 
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.LeafASTNode
-import org.intellij.markdown.flavours.MarkdownFlavourDescriptor
-import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
-import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
-import org.intellij.markdown.flavours.space.SFMFlavourDescriptor
-import org.intellij.markdown.parser.MarkdownParser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -17,6 +12,11 @@ class MarkdownParsingTest : TestCase() {
         val result = getParsedTreeText(src)
 
         assertSameLinesWithFile(getTestDataPath() + "/" + testName + ".txt", result)
+    }
+
+    private fun fileTestCase(path: String, tags: Set<String>) {
+        val src = readFromFile(getTestDataPath() + path)
+        assertEquals(tags, getTags(src))
     }
 
     private fun getParsedTreeText(inputText: String): String {
@@ -52,9 +52,13 @@ class MarkdownParsingTest : TestCase() {
     }
 
     @Test
-    fun testTags() {
-        val src = readFromFile(getTestDataPath() + "test.md")
-        assertEquals(setOf(",", "parole,", "tag,", "anche", "in/mezzo.", "tanti", "test/esaus", "tivi"), getTags(src))
+    fun testTags() =
+        fileTestCase("test.md", setOf(",", "parole,", "tag,", "anche", "in/mezzo.", "tanti", "test/esaus", "tivi"))
+
+    }
+
+    @Test
+    fun getTagsInLinksDescriptions() {
     }
 //
 //    @Test
