@@ -62,6 +62,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - run: npm install yarn
+      - run: yarn install v1.22.17
 
       - name: Run Test
         id: gradle-test
