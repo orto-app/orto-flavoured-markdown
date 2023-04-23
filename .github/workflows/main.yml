@@ -97,6 +97,12 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
 
+      - name: Publish to Maven local
+        id: gradle-test
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: publishToMavenLocal
+
       - name: Run Test
         id: gradle-test
         uses: gradle/gradle-build-action@v2
