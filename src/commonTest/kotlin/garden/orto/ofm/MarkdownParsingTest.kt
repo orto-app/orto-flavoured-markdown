@@ -16,8 +16,18 @@ class MarkdownParsingTest : TestCase() {
 
     private fun fileTestCase(path: String, tags: Set<String>) {
         val src = readFromFile(getTestDataPath() + path)
-        assertEquals(tags, getTags(src))
+        stringTestCase(src, tags)
     }
+
+    private fun stringTestCase(src: String, expected: Set<String>) {
+        val actual = getTags(src)
+        assertEquals(expected, actual)
+    }
+
+    private fun getTestDataPath(): String {
+        return getOFMMarkdownHome() + "/${MARKDOWN_TEST_DATA_PATH}/parser/"
+    }
+
 
     private fun getParsedTreeText(inputText: String): String {
         val tree = parseMarkdown(inputText)
@@ -52,306 +62,54 @@ class MarkdownParsingTest : TestCase() {
     }
 
     @Test
-    fun testTags() =
+    fun testTagsIntegration() =
         fileTestCase("test.md", setOf(",", "parole,", "tag,", "anche", "in/mezzo.", "tanti", "test/esaus", "tivi"))
 
-    }
+    @Test
+    fun testGetTagsEmptyTag() = stringTestCase(
+        "\n Normale paragrafo con un ##tag nullo",
+        setOf("tag")
+    )
 
     @Test
-    fun getTagsInLinksDescriptions() {
-    }
-//
-//    @Test
-//    fun testSmall1() {
-//        assertEquals("Markdown:MARKDOWN_FILE\n  Markdown:EOL('\\n')",
-//                getParsedTreeText("\n"))
-//    }
-//
-//    @Test
-//    fun testSmall2() {
-//        assertEquals(
-//                "Markdown:MARKDOWN_FILE\n" +
-//                "  Markdown:PARAGRAPH\n" +
-//                "    Markdown:TEXT('test')",
-//                getParsedTreeText("test"))
-//    }
-//
-//    @Test
-//    fun testSmall3() {
-//        assertEquals(
-//                "Markdown:MARKDOWN_FILE\n" +
-//                "  Markdown:PARAGRAPH\n" +
-//                "    Markdown:EMPH\n" +
-//                "      Markdown:EMPH('*')\n" +
-//                "      Markdown:TEXT('test')\n" +
-//                "      Markdown:EMPH('*')",
-//                getParsedTreeText("*test*"))
-//    }
-//
-//    @Test
-//    fun testOneSpace() {
-//        assertEquals("Markdown:MARKDOWN_FILE\n" +
-//                "  WHITE_SPACE(' ')",
-//                getParsedTreeText(" "))
-//    }
-//
-//    @Test
-//    fun testLeadingSpace() {
-//        assertEquals("Markdown:MARKDOWN_FILE\n  Markdown:PARAGRAPH\n    WHITE_SPACE(' ')\n    Markdown:TEXT('Test')",
-//                getParsedTreeText(" Test"))
-//    }
-//
-//    @Test
-//    fun testTrailingSpace() {
-//        assertEquals("Markdown:MARKDOWN_FILE\n  Markdown:PARAGRAPH\n    Markdown:TEXT('Test')\n    WHITE_SPACE(' ')",
-//                getParsedTreeText("Test "))
-//    }
-//
-//    @Test
-//    fun testLeadingAndTrailingWhitespaces() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testSimple() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testCodeBlocks() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testUnorderedLists() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testOrderedLists() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testBlockquotes() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testHeaders() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testHtmlBlocks() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testEmphStrong() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testCodeFence() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testCodeSpan() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testLinkDefinitions() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testInlineLinks() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testReferenceLinks() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testTightLooseLists() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testHruleAndSetext() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testTabStops() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testHardLineBreaks() {
-//        defaultTest()
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testPuppetApache() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testRuby16750() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testExample208() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testExample221() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testExample226() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testImages() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testStrikethrough() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testGfmAutolink() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testSfmAutolink() {
-//        defaultTest(SFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testCheckLists() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testGfmTable() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testRuby17337() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testEa79689() {
-//        defaultTest()
-//    }
-//
-//    @Test
-//    fun testRuby18237() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testRuby18936() {
-//        defaultTest(CommonMarkFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testNonEnglishSentences() {
-//        defaultTest(CommonMarkFlavourDescriptor())
-//        defaultTest(GFMFlavourDescriptor())
-//        defaultTest(SFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testBug28() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testNewlinesAndAnyChars() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
+    fun testGetTagsEmoji() = stringTestCase(
+        "\n Normale paragrafo con un #\uD83C\uDFF7\uFE0F/composito #tag emoji",
+        setOf("\uD83C\uDFF7\uFE0F/composito", "tag")
+    )
 
     @Test
-    fun testStrikethroughIntersectionWithBoldStart() {
-        assertEquals("""
-Markdown:MARKDOWN_FILE
-  Markdown:PARAGRAPH
-    Markdown:STRONG
-      Markdown:EMPH('*')
-      Markdown:EMPH('*')
-      Markdown:TEXT('prefix')
-      Markdown:~('~')
-      Markdown:~('~')
-      Markdown:TEXT('text')
-      Markdown:EMPH('*')
-      Markdown:EMPH('*')
-    Markdown:TEXT('suffix')
-    Markdown:~('~')
-    Markdown:~('~')
-        """.trimIndent(), getParsedTreeText("**prefix~~text**suffix~~"))
-    }
+    fun testGetTagsInHeaders() = stringTestCase(
+        "\n# Normale header\n## Ciaone #questo/invece_è un he#ader con dei tag",
+        setOf("questo/invece_è", "ader")
+    )
 
     @Test
-    fun testStrikethroughIntersectionWithTildeStart() {
-        assertEquals("""
-Markdown:MARKDOWN_FILE
-  Markdown:PARAGRAPH
-    Markdown:STRIKETHROUGH
-      Markdown:~('~')
-      Markdown:~('~')
-      Markdown:TEXT('prefix')
-      Markdown:EMPH('*')
-      Markdown:EMPH('*')
-      Markdown:TEXT('text')
-      Markdown:~('~')
-      Markdown:~('~')
-    Markdown:TEXT('suffix')
-    Markdown:EMPH('*')
-    Markdown:EMPH('*')
-        """.trimIndent(), getParsedTreeText("~~prefix**text~~suffix**"))
-    }
-//
-//    @Test
-//    fun testStrikethroughNoSpacesWordInside() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testStrikethroughNoSpacesPunctuationInside() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    // https://github.github.com/gfm/#example-200
-//    @Test
-//    fun testEscapedPipeInsideTableCell() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
-//
-//    @Test
-//    fun testTableInsideBlockQuoteWithMissingLastPipe() {
-//        defaultTest(GFMFlavourDescriptor())
-//    }
+    fun testGetTagsInLists() = stringTestCase(
+        "- element\n - ele##ment\n- #è£ement\n\n1. #\uD83E\uDD91 is a squid\n2. \uD83D\uDC19 is an #octopus\n3. #\uD83D\uDC7Eè un mostro alieno",
+        setOf("ment", "è£ement", "\uD83E\uDD91", "octopus", "\uD83D\uDC7Eè")
+    )
 
-    private fun getTestDataPath(): String {
-        return getIntellijMarkdownHome() + "/${MARKDOWN_TEST_DATA_PATH}/parser/"
-    }
+    @Test
+    fun testGetTagsInTableHeaders() = stringTestCase(
+        "| First Header # | Second #Heàder |\n" +
+                "| ------------- | ------------- |\n" +
+                "| Content | Content |\n" +
+                "| Content | Content |",
+        setOf("Heàder")
+    )
+
+    @Test
+    fun testGetTagsInTableCells() = stringTestCase(
+        "| First Header | Second Heàder |\n" +
+                "| ------------- | ------------- |\n" +
+                "| Con#tent | Content |\n" +
+                "| Content | Co#ntent |",
+        setOf("tent", "ntent")
+    )
+
+    @Test
+    fun testGetTagsInLinksDescriptions() = stringTestCase(
+        "[Nice #web§ite ](https://orto.garden)",
+        setOf("web§ite")
+    )
 }

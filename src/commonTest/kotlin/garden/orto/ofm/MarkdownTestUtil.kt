@@ -14,7 +14,7 @@ expect fun readFromFile(path: String): String
 
 expect fun assertSameLinesWithFile(path: String, result: String)
 
-expect fun getIntellijMarkdownHome(): String
+expect fun getOFMMarkdownHome(): String
 
 val TestCase.testName: String
     get() {

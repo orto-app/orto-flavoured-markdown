@@ -20,7 +20,7 @@ actual fun assertSameLinesWithFile(path: String, result: String) {
     assertEquals(fileText, result)
 }
 
-actual fun getIntellijMarkdownHome(): String {
+actual fun getOFMMarkdownHome(): String {
     return System.getProperty(OFM_TEST_KEY) ?: System.getProperty("user.dir")
 }
 

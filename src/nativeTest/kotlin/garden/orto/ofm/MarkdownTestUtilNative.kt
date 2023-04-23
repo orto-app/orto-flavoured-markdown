@@ -41,7 +41,7 @@ private val intellijMarkdownHome: Lazy<String> = lazy {
     }
 }
 
-actual fun getIntellijMarkdownHome(): String {
+actual fun getOFMMarkdownHome(): String {
     return intellijMarkdownHome.value
 }
 

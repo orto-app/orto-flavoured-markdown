@@ -26,7 +26,7 @@ actual fun assertSameLinesWithFile(path: String, result: String) {
     assertEqualsIdeaFriendly(readFromFile(path), result)
 }
 
-actual fun getIntellijMarkdownHome(): String {
+actual fun getOFMMarkdownHome(): String {
     return intellijMarkdownHome.value
 }
 
