@@ -1,9 +1,11 @@
+//import garden.orto.registerPublicationFromKotlinPlugin
+
 fun properties(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
 
 
 plugins {
-    kotlin("multiplatform") version "1.8.0"
+    kotlin("multiplatform") version "1.8.20"
     `maven-publish`
     signing
 }
@@ -24,6 +26,27 @@ repositories {
 }
 
 kotlin {
+    listOf(
+        linuxX64("linuxX64"),
+        macosX64("macosX64"),
+        macosArm64("macosArm64"),
+        iosX64("iosX64"),
+        iosArm64("iosArm64"),
+        iosSimulatorArm64("iosSimulatorArm64"),
+        watchosSimulatorArm64("watchosSimulatorArm64"),
+        tvosSimulatorArm64("tvosSimulatorArm64")
+    ).forEach {
+        it.binaries.sharedLib {
+            baseName = "${it.name}Native"
+        }
+    }
+    mingwX64 {
+        binaries {
+            sharedLib {
+                baseName = "libnative"
+            }
+        }
+    }
     jvm {
         jvmToolchain(11)
         withJava()
@@ -41,15 +64,7 @@ kotlin {
             }
         }
     }
-    linuxX64()
-    mingwX64()
-    macosX64()
-    macosArm64()
-    iosSimulatorArm64()
-    watchosSimulatorArm64()
-    tvosSimulatorArm64()
     ios()
-
 
     sourceSets {
         val commonMain by getting {
@@ -73,7 +88,7 @@ kotlin {
             dependsOn(commonMain)
         }
         listOf(
-            "linuxX64", "mingwX64", "macosX64", "macosArm64", "ios", "iosSimulatorArm64",
+            "linuxX64", "mingwX64", "macosX64", "macosArm64", "iosX64", "iosArm64", "iosSimulatorArm64",
             "watchosSimulatorArm64", "tvosSimulatorArm64"
         ).forEach { target ->
             getByName("${target}Main").dependsOn(nativeMain)
@@ -105,6 +120,27 @@ val publicationsToArtifacts = mapOf(
     "tvosSimulatorArm64" to "ofm-tvossimulatorarm64",
     "metadata" to "ofm-metadata"
 )
+
+subprojects {
+    apply(plugin = "maven-publish")
+    configure<PublishingExtension> {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/orto-app/orto-flavoured-markdown")
+                credentials {
+                    username = System.getenv("USERNAME")
+                    password = System.getenv("TOKEN")
+                }
+            }
+        }
+        publications {
+            register<MavenPublication>("gpr") {
+                from(components["java"])
+            }
+        }
+    }
+}
 
 //publicationsToArtifacts.forEach { publicationName, artifactId ->
 //    registerPublicationFromKotlinPlugin(publicationName, artifactId)
