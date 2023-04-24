@@ -115,9 +115,6 @@ jobs:
         with:
           arguments: clean
 
-      - name: test
-        run: echo $GH_USERNAME
-
       - name: Publish to Github Packages
         env:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
