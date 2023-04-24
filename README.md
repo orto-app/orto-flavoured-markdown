@@ -9,8 +9,8 @@ Here is an example of an Orto Flavoured Markdown note:
 
 # Orto
 
-Orto is a #digital-gardening app that allows you to cross reference your thoughts with a #lean approach to note taking.
-With Orto you can:
+Orto is a #digital-gardening app that allows you to cross reference your thoughts with
+a #lean approach to note taking. With Orto you can:
 
 1. Archive and tag your #🐈 pics
 2. Monitor your #DnD character progress
