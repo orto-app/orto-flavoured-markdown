@@ -115,6 +115,9 @@ jobs:
         with:
           arguments: clean
 
+      - name: test
+        run: echo $GH_USERNAME
+
       - name: Publish to Github Packages
         id: gradle-publish
         uses: gradle/gradle-build-action@v2
