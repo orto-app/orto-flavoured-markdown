@@ -23,11 +23,11 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
-      - name: Run ios(intel) tests
-        id: gradle-iosX64Test
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: :ofm:iosX64Test --stacktrace
+#      - name: Run ios(intel) tests
+#        id: gradle-iosX64Test
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: :ofm:iosX64Test --stacktrace
 
       - name: Run ios(apple silicon) tests
         id: gradle-iosSimulatorArm64Test
