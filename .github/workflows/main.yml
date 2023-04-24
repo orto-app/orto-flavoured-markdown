@@ -119,6 +119,9 @@ jobs:
         run: echo $GH_USERNAME
 
       - name: Publish to Github Packages
+        env:
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         id: gradle-publish
         uses: gradle/gradle-build-action@v2
         with:
