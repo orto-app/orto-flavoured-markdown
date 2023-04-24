@@ -14,6 +14,7 @@ group = OFM.group
 version = OFM.version
 
 kotlin {
+    jvmToolchain(8)
     android {
         publishAllLibraryVariants()
     }
