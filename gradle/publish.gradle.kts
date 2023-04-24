@@ -1,11 +1,11 @@
 apply(plugin = "maven-publish")
-apply(plugin = "signing")
+//apply(plugin = "signing")
 
 fun Project.publishing(action: PublishingExtension.() -> Unit) =
     configure(action)
 
-fun Project.signing(configure: SigningExtension.() -> Unit): Unit =
-    configure(configure)
+//fun Project.signing(configure: SigningExtension.() -> Unit): Unit =
+//    configure(configure)
 
 val publications: PublicationContainer =
     (extensions.getByName("publishing") as PublishingExtension).publications
@@ -78,6 +78,6 @@ publishing {
     }
 }
 
-signing {
-    sign(publications)
-}
+//signing {
+//    sign(publications)
+//}
