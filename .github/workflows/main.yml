@@ -98,20 +98,6 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: Cache kotlin modules
-        id: cache-kotlin
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-kotlin-modules
-        with:
-          # kotlin cache files are stored in `~/.konan` on Linux/macOS
-          path: ~/.konan
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/build.gradle.kts') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
       - name: Build
         id: gradle-build
         uses: gradle/gradle-build-action@v2
