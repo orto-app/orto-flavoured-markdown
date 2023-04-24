@@ -68,18 +68,11 @@ publishing {
 
     repositories {
         maven {
-            name = "Sonatype"
-            url = uri(
-                if (version.toString().endsWith("SNAPSHOT")) {
-                    "https://s01.oss.sonatype.org/content/repositories/snapshots"
-                } else {
-                    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
-                }
-            )
-
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/orto-app/orto-flavoured-markdown")
             credentials {
-                username = sonatypeUser ?: sonatypeUsernameEnv ?: ""
-                password = sonatypePassword ?: sonatypePasswordEnv ?: ""
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GH_USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GH_TOKEN")
             }
         }
     }
