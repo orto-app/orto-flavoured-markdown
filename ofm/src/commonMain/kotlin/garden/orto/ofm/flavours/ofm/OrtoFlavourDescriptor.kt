@@ -4,7 +4,6 @@ import garden.orto.ofm.lexer._OFMLexer
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import org.intellij.markdown.html.makeXssSafeDestination
 import org.intellij.markdown.lexer.MarkdownLexer
-import org.intellij.markdown.parser.MarkerProcessorFactory
 
 
 /**
