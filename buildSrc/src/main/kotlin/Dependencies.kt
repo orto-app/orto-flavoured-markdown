@@ -28,6 +28,7 @@ object Versions {
 object Deps {
     object Gradle {
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        const val android = "com.android.tools.build:gradle:${Versions.android}"
     }
 
     object Kotlin {
@@ -38,7 +39,6 @@ object Deps {
 
     object Test {
         const val common = "org.jetbrains.kotlin:kotlin-test:${Versions.kotlin}"
-        //const val annotation = "org.jetbrains.kotlin:kotlin-test-annotations-common:${Versions.kotlin}"
         const val jvm = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
         const val js = "org.jetbrains.kotlin:kotlin-test-js:${Versions.kotlin}"
     }

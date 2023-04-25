@@ -1,5 +1,5 @@
 plugins {
-    //trick: for the same plugin versions in all sub-modules
+    //trick: for the same plugin versions in all submodules
     id("com.android.library").version(Versions.android).apply(false)
     kotlin("android").version(Versions.kotlin).apply(false)
     kotlin("multiplatform").version(Versions.kotlin).apply(false)
@@ -8,5 +8,6 @@ plugins {
 buildscript {
     dependencies {
         classpath(Deps.Gradle.kotlin)
+        classpath(Deps.Gradle.android)
     }
 }
