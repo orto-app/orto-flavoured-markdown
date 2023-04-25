@@ -101,6 +101,7 @@ jobs:
   publish:
     name: Publish SNAPSHOT
     runs-on: macos-12
+    needs: [ common, android, jvm, darwin ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
