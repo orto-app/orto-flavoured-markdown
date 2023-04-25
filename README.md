@@ -40,3 +40,8 @@ TODO
 ## Contributing
 
 Unless otherwise stated all the files in this repository are to be considered under the EUPL terms. We welcome contributions from anybody. Currently our process is not structured but feel free to open or take issues in case you want to help us.
+
+
+### `_OFMLexer.kt` generation
+
+To generate `_OFMLexer.kt` a 2019.3 Intellij IDEA is required and then [this procedure](https://github.com/JetBrains/markdown#development-gotchas) will guide you through the generation process.
