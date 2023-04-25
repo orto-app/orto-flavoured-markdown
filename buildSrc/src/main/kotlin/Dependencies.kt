@@ -13,7 +13,7 @@ object OFM {
 
 object Versions {
     // Gradle plugins
-    const val android = "7.4.2"
+    const val android = "7.5"
     const val kotlin = "1.8.20"
 
     // Dependencies
