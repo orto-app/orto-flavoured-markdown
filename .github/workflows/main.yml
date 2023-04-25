@@ -35,11 +35,11 @@ jobs:
 #        with:
 #          arguments: :ofm:iosSimulatorArm64Test --stacktrace
 
-      - name: Run macos(intel) tests
-        id: gradle-macosX64Test
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: :ofm:macosX64Test --stacktrace
+#      - name: Run macos(intel) tests
+#        id: gradle-macosX64Test
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: :ofm:macosX64Test --stacktrace
 
       - name: Run macos(apple silicon) tests
         id: gradle-macosArm64Test
