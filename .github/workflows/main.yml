@@ -1,10 +1,15 @@
 name: Build and Test
 
 on:
-  workflow_dispatch:
   push:
     branches:
-    - 'main'
+      - main
+    paths-ignore:
+      - "**/*.md"
+  pull_request:
+    paths-ignore:
+      - "**/*.md"
+  workflow_dispatch:
 
 env:
   XCODE_VERSION: '13.4.1'
@@ -12,8 +17,8 @@ env:
   NODE_VERSION: '18'
 
 jobs:
-  darwin:
-    name: Test darwin
+  macos:
+    name: Build on macos
     runs-on: macos-12
     steps:
       - name: Checkout
@@ -23,85 +28,58 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
-#      - name: Run ios(intel) tests
-#        id: gradle-iosX64Test
-#        uses: gradle/gradle-build-action@v2
-#        with:
-#          arguments: :ofm:iosX64Test --stacktrace
+      - name: Mac build
+        run: |
+          ./gradlew macosX64Test iosX64Test watchosX64Test watchosX86Test tvosX64Test \
+          publishKotlinMultiplatformPublicationToMavenLocal \
+          publishIosArm32PublicationToMavenLocal \
+          publishIosArm64PublicationToMavenLocal \
+          publishIosSimulatorArm64PublicationToMavenLocal \
+          publishIosX64PublicationToMavenLocal \
+          publishMacosX64PublicationToMavenLocal \
+          publishMacosArm64PublicationToMavenLocal \
+          --no-daemon --stacktrace
 
-#      - name: Run ios(apple silicon) tests
-#        id: gradle-iosSimulatorArm64Test
-#        uses: gradle/gradle-build-action@v2
-#        with:
-#          arguments: :ofm:iosSimulatorArm64Test --stacktrace
+  windows:
+    name: Build on windows
+    runs-on: windows-latest
 
-#      - name: Run macos(intel) tests
-#        id: gradle-macosX64Test
-#        uses: gradle/gradle-build-action@v2
-#        with:
-#          arguments: :ofm:macosX64Test --stacktrace
+    steps:
+      - uses: actions/checkout@v3
 
-      - name: Run macos(apple silicon) tests
-        id: gradle-macosArm64Test
-        uses: gradle/gradle-build-action@v2
+      - name: JDK setup
+        uses: actions/setup-java@v3
         with:
-          arguments: :ofm:macosArm64Test --stacktrace
+          java-version: 11
+          distribution: corretto
 
-  jvm:
-    name: Test JVM
+      - name: Windows build
+        run: |
+          ./gradlew mingwX64Test publishKotlinMultiplatformPublicationToMavenLocal publishMingwX64PublicationToMavenLocal publishMingwX86PublicationToMavenLocal --no-daemon --stacktrace
+        env:
+          GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx3g"
+
+  linux:
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: Run Test
-        id: gradle-test
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: :ofm:jvmTest --stacktrace
-
-  android:
-    name: Test Android
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - uses: actions/setup-java@v1
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-
-      - name: Run Test
-        id: gradle-test
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: :ofm:testReleaseUnitTest --stacktrace
-
-  common:
-    name: Test common
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - uses: actions/setup-java@v1
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-
-      - name: Run Test
-        id: gradle-test
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: :ofm:test --stacktrace
+      - name: Linux build
+        run: |
+          ./gradlew build publishToMavenLocal --no-daemon --stacktrace
+        env:
+          GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx3g"
 
   publish:
     name: Publish SNAPSHOT
     runs-on: macos-12
-    needs: [ common, android, jvm, darwin ]
+    needs: [ linux, windows, macos ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3

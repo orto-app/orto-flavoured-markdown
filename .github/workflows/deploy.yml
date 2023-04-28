@@ -1,0 +1,66 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
+  ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
+  ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
+  ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
+
+jobs:
+  deploy-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: JDK setup
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: corretto
+
+      - name: Linux deploy
+        run: |
+          ./gradlew publish --no-daemon --stacktrace
+
+  deploy-macos:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: JDK setup
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: corretto
+
+      - name: Mac deploy
+        run: |
+          ./gradlew \
+          publishIosArm32PublicationToMavenRepository \
+          publishIosArm64PublicationToMavenRepository \
+          publishIosSimulatorArm64PublicationToMavenRepository \
+          publishIosX64PublicationToMavenRepository \
+          publishMacosX64PublicationToMavenRepository \
+          publishMacosArm64PublicationToMavenRepository \
+          --no-daemon --stacktrace
+
+  deploy-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: JDK setup
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: corretto
+
+      - name: Windows deploy
+        run: |
+          ./gradlew publishMingwX64PublicationToMavenRepository publishMingwX86PublicationToMavenRepository --no-daemon --stacktrace
