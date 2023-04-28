@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  JAVA_VERSION: '17'
+  JAVA_VERSION: '11'
   JAVA_DISTRIBUTION: 'corretto'
   ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
   ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
