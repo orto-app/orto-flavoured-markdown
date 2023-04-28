@@ -1,5 +1,4 @@
 // Run on IntelliJ
-val ideaActive = System.getProperty("idea.active") == "true"
-
+val ideaActive by lazy { System.getProperty("idea.active") == "true" }
 // Run on apple silicon
-val isAppleSilicon = System.getProperty("os.arch") == "aarch64"
+val isAppleSilicon by lazy { System.getProperty("os.arch") == "aarch64" }

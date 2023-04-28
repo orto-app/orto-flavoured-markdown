@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - ci
     paths-ignore:
       - "**/*.md"
   pull_request:
@@ -13,7 +14,7 @@ on:
 
 env:
   XCODE_VERSION: '13.4.1'
-  JAVA_VERSION: '11'
+  JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'corretto'
 
 jobs:
@@ -28,9 +29,14 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+
       - name: Mac build
         run: |
-          ./gradlew macosX64Test iosX64Test watchosX64Test watchosX86Test tvosX64Test \
+          ./gradlew macosX64Test iosX64Test \
           publishKotlinMultiplatformPublicationToMavenLocal \
           publishIosArm32PublicationToMavenLocal \
           publishIosArm64PublicationToMavenLocal \

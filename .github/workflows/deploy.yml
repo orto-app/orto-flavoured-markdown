@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
 
 env:
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'corretto'
   ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
   ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
   ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
@@ -16,11 +18,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: JDK setup
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
-          java-version: 11
-          distribution: corretto
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }
 
       - name: Linux deploy
         run: |
@@ -32,11 +33,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: JDK setup
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
-          java-version: 11
-          distribution: corretto
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }
 
       - name: Mac deploy
         run: |
@@ -55,11 +55,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: JDK setup
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
-          java-version: 11
-          distribution: corretto
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }
 
       - name: Windows deploy
         run: |

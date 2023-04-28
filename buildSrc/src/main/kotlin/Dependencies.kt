@@ -1,6 +1,6 @@
 object OFM {
     private const val baseVersion = "0.1.0"
-    private const val snapshot = true
+    const val snapshot = true
     const val group = "garden.orto"
     var version = if (snapshot) {
         baseVersion.substringBefore("-").split('.').let { (major, minor, patch) ->
@@ -13,10 +13,12 @@ object OFM {
 
 object Versions {
     // Gradle plugins
-    const val android = "7.4.0"
+    const val android = "7.4.2"
+    const val binaryCompatibilityValidator = "0.13.1"
     const val kotlin = "1.8.20"
 
     // Dependencies
+    const val dokka = "1.8.10"
     const val markdown = "0.4.1"
 
     // Android
@@ -29,6 +31,8 @@ object Deps {
     object Gradle {
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val android = "com.android.tools.build:gradle:${Versions.android}"
+        const val dokka = "org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka}"
+        const val compiler_embeddable = "org.jetbrains.kotlin:kotlin-compiler-embeddable:${Versions.kotlin}"
     }
 
     object Kotlin {
