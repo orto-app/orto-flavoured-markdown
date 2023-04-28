@@ -60,7 +60,7 @@ jobs:
           GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx3g"
 
   linux:
-
+    name: Build on linux
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
