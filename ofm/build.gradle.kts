@@ -19,6 +19,8 @@ kotlin {
         }
     }
     jvm()
+    linuxX64()
+    mingwX64()
     js(IR) {
         jvmToolchain(11)
     }
@@ -32,6 +34,7 @@ kotlin {
 
             // apple silicon
             macosArm64(),
+            iosArm64(),
             iosSimulatorArm64()
         ).forEach {
             it.binaries.framework {
@@ -113,6 +116,18 @@ kotlin {
                 implementation(Deps.Test.js)
             }
         }
+        val linuxX64Main by getting {
+            dependsOn(nativeMain)
+        }
+        val linuxX64Test by getting {
+            dependsOn(nativeTest)
+        }
+        val mingwX64Main by getting {
+            dependsOn(nativeMain)
+        }
+        val mingwX64Test by getting {
+            dependsOn(nativeTest)
+        }
 
         // darwin
         if (ideaActive.not()) {
@@ -123,10 +138,10 @@ kotlin {
             val macosX64Test by getting {
                 dependsOn(nativeTest)
             }
-            val iosMain by getting {
+            val iosX64Main by getting {
                 dependsOn(nativeMain)
             }
-            val iosTest by getting {
+            val iosX64Test by getting {
                 dependsOn(nativeTest)
             }
             // apple silicon
@@ -134,6 +149,12 @@ kotlin {
                 dependsOn(nativeMain)
             }
             val macosArm64Test by getting {
+                dependsOn(nativeTest)
+            }
+            val iosArm64Main by getting {
+                dependsOn(nativeMain)
+            }
+            val iosArm64Test by getting {
                 dependsOn(nativeTest)
             }
             val iosSimulatorArm64Main by getting {
@@ -149,6 +170,12 @@ kotlin {
                     dependsOn(nativeMain)
                 }
                 val macosArm64Test by getting {
+                    dependsOn(nativeTest)
+                }
+                val iosArm64Main by getting {
+                    dependsOn(nativeMain)
+                }
+                val iosArm64Test by getting {
                     dependsOn(nativeTest)
                 }
                 val iosSimulatorArm64Main by getting {
@@ -249,5 +276,137 @@ configurations.named("podReleaseFrameworkOsxFat").configure {
 configurations.named("podReleaseFrameworkMacosX64").configure {
     attributes {
         attribute(myAttribute, "x64-pod-release-macos")
+    }
+}
+
+if (ideaActive.not()) {
+    // replace debugFrameworkIosFat by the name of the second configuration that conflicts
+    configurations.named("debugFrameworkIosX64").configure {
+        attributes {
+            attribute(myAttribute, "x64-debug-all")
+        }
+    }
+    // replace releaseFrameworkIosFat by the name of the first configuration that conflicts
+    configurations.named("releaseFrameworkIosX64").configure {
+        attributes {
+            // put a unique attribute
+            attribute(myAttribute, "x64-release-all")
+        }
+    }
+
+    // replace debugFrameworkIosFat by the name of the second configuration that conflicts
+    configurations.named("podReleaseFrameworkIosX64").configure {
+        attributes {
+            attribute(myAttribute, "x64-pod-release-all")
+        }
+    }
+    // replace releaseFrameworkIosFat by the name of the first configuration that conflicts
+    configurations.named("podDebugFrameworkIosX64").configure {
+        attributes {
+            // put a unique attribute
+            attribute(myAttribute, "x64-pod-debug-all")
+        }
+    }
+
+
+    // apple silicon
+    // replace releaseFrameworkIosFat by the name of the first configuration that conflicts
+    configurations.named("releaseFrameworkIosArm64").configure {
+        attributes {
+            // put a unique attribute
+            attribute(myAttribute, "arm64-release-all")
+        }
+    }
+
+    // replace debugFrameworkIosFat by the name of the second configuration that conflicts
+    configurations.named("podReleaseFrameworkIosArm64").configure {
+        attributes {
+            attribute(myAttribute, "arm64-pod-release-all")
+        }
+    }
+
+    // replace releaseFrameworkIosFat by the name of the first configuration that conflicts
+    configurations.named("podDebugFrameworkIosArm64").configure {
+        attributes {
+            // put a unique attribute
+            attribute(myAttribute, "arm64-pod-debug-all")
+        }
+    }
+
+    // replace debugFrameworkIosFat by the name of the second configuration that conflicts
+    configurations.named("debugFrameworkIosArm64").configure {
+        attributes {
+            attribute(myAttribute, "arm64-debug-all")
+        }
+    }
+    
+    // replace releaseFrameworkIosFat by the name of the first configuration that conflicts
+    configurations.named("releaseFrameworkIosSimulatorArm64").configure {
+        attributes {
+            // put a unique attribute
+            attribute(myAttribute, "simulator-release-all")
+        }
+    }
+
+    // replace debugFrameworkIosFat by the name of the second configuration that conflicts
+    configurations.named("podReleaseFrameworkIosSimulatorArm64").configure {
+        attributes {
+            attribute(myAttribute, "simulator-pod-release-all")
+        }
+    }
+
+    // replace releaseFrameworkIosFat by the name of the first configuration that conflicts
+    configurations.named("podDebugFrameworkIosSimulatorArm64").configure {
+        attributes {
+            // put a unique attribute
+            attribute(myAttribute, "simulator-pod-debug-all")
+        }
+    }
+
+    // replace debugFrameworkIosFat by the name of the second configuration that conflicts
+    configurations.named("debugFrameworkIosSimulatorArm64").configure {
+        attributes {
+            attribute(myAttribute, "simulator-debug-all")
+        }
+    }
+
+    // replace releaseFrameworkIosFat by the name of the first configuration that conflicts
+    configurations.named("podDebugFrameworkMacosArm64").configure {
+        attributes {
+            // put a unique attribute
+            attribute(myAttribute, "macos-pod-debug-all")
+        }
+    }
+
+    // replace debugFrameworkIosFat by the name of the second configuration that conflicts
+    configurations.named("debugFrameworkMacosArm64").configure {
+        attributes {
+            attribute(myAttribute, "macos-debug-all")
+        }
+    }
+
+    // replace releaseFrameworkMacosArm64 by the name of the second configuration that conflicts
+    configurations.named("releaseFrameworkMacosArm64").configure {
+        attributes {
+            attribute(myAttribute, "macos-release-all")
+        }
+    }
+
+    // replace podReleaseFrameworkMacosArm64 by the name of the second configuration that conflicts
+    configurations.named("podReleaseFrameworkMacosArm64").configure {
+        attributes {
+            attribute(myAttribute, "macos-pod-release-all")
+        }
+    }
+
+} else {
+    if (isAppleSilicon) {
+        // apple silicon
+
+        // TODO: Fill in as above
+    } else {
+        // intel
+
+        // TODO: Fill in as above
     }
 }

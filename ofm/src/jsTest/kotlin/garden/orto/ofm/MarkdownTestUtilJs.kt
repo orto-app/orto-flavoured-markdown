@@ -6,7 +6,7 @@ private val fsSeparator = lazy {
     (js("require('path').sep") as String)[0]
 }
 
-private val intellijMarkdownHome: Lazy<String> = lazy {
+private val ofmMarkdownHome: Lazy<String> = lazy {
     val sep = fsSeparator.value
     var dir = (js("process.cwd()") as String)
     while (!js("require('fs').existsSync")("$dir${sep}README.md") as Boolean) {
@@ -27,7 +27,7 @@ actual fun assertSameLinesWithFile(path: String, result: String) {
 }
 
 actual fun getOFMMarkdownHome(): String {
-    return intellijMarkdownHome.value
+    return ofmMarkdownHome.value
 }
 
 private fun assertEqualsIdeaFriendly(expected: String, actual: String) {

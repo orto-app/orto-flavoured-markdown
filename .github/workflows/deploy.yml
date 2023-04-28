@@ -21,7 +21,8 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.JAVA_DISTRIBUTION }
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          cache: "gradle"
 
       - name: Linux deploy
         run: |
@@ -36,12 +37,12 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.JAVA_DISTRIBUTION }
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          cache: "gradle"
 
       - name: Mac deploy
         run: |
           ./gradlew \
-          publishIosArm32PublicationToMavenRepository \
           publishIosArm64PublicationToMavenRepository \
           publishIosSimulatorArm64PublicationToMavenRepository \
           publishIosX64PublicationToMavenRepository \
@@ -58,8 +59,9 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.JAVA_DISTRIBUTION }
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          cache: "gradle"
 
       - name: Windows deploy
         run: |
-          ./gradlew publishMingwX64PublicationToMavenRepository publishMingwX86PublicationToMavenRepository --no-daemon --stacktrace
+          ./gradlew publishMingwX64PublicationToMavenRepository --no-daemon --stacktrace

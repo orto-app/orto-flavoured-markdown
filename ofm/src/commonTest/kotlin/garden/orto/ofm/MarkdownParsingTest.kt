@@ -38,7 +38,12 @@ class MarkdownParsingTest : TestCase() {
         return treeToStr(src, tree, StringBuilder(), 0).toString()
     }
 
-    private fun treeToStr(src: String, tree: ASTNode, sb: StringBuilder, depth: Int): StringBuilder {
+    private fun treeToStr(
+        src: String,
+        tree: ASTNode,
+        sb: StringBuilder,
+        depth: Int
+    ): StringBuilder {
         if (sb.isNotEmpty()) {
             sb.append('\n')
         }

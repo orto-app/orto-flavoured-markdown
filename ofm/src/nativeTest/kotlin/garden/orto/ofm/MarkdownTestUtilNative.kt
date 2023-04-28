@@ -27,7 +27,7 @@ actual fun assertSameLinesWithFile(path: String, result: String) {
     assertEquals(fileText, result)
 }
 
-private val intellijMarkdownHome: Lazy<String> = lazy {
+private val ofmMarkdownHome: Lazy<String> = lazy {
     memScoped {
         val buffer = allocArray<ByteVar>(PATH_MAX)
         var dir = getcwd(buffer, PATH_MAX)?.toKString()?.replace("\\", "/") ?: error("could not get cwd")
@@ -42,7 +42,7 @@ private val intellijMarkdownHome: Lazy<String> = lazy {
 }
 
 actual fun getOFMMarkdownHome(): String {
-    return intellijMarkdownHome.value
+    return ofmMarkdownHome.value
 }
 
 

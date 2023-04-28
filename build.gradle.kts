@@ -39,10 +39,10 @@ allprojects {
             repositories {
                 maven {
                     url = uri(
-                        if (OFM.snapshot) {
-                            "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                        if (!OFM.snapshot) {
+                            "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
                         } else {
-                            "https://oss.sonatype.org/content/repositories/snapshots"
+                            "https://s01.oss.sonatype.org/content/repositories/snapshots/"
                         }
                     )
                     credentials {
