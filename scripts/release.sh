@@ -170,7 +170,9 @@ if [ "$publish" = "1" ]; then
   # If this command fails we still want to go back to the
   # branch we were on.
   git push
+  git push github
   git push --tags
+  git push github --tags
   set -e
 fi
 
