@@ -1,6 +1,6 @@
 # Orto Flavoured Markdown
 
-[![Build and Test](https://github.com/orto-app/orto-flavoured-markdown/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/orto-app/orto-flavoured-markdown/actions/workflows/main.yml) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/garden.orto/ofm/badge.svg)](https://maven-badges.herokuapp.com/maven-central/garden.orto/ofm)
+[![Build and Test](https://github.com/orto-app/orto-flavoured-markdown/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/orto-app/orto-flavoured-markdown/actions/workflows/main.yml) [![Maven Central](https://img.shields.io/maven-central/v/garden.orto/ofm.svg)](https://search.maven.org/artifact/garden.orto/ofm)
 
 This project implements an extension to [Github Flavoured Markdown](https://github.github.com/gfm/) to add `#tags`. A tag is any sequence of characters (except `\t`, `\n`, ` `, `#`, `\f` and `\r`) starting with a `#` character.
 
