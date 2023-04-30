@@ -37,10 +37,24 @@ For example:
 
 ## Add this library to your project
 
-Add the following line to your `build.gradle.kts`:
+Orto Flavoured Markdown is currently published to Maven Central, so add that to repositories.
 
+```kotlin
+repositories {
+    mavenCentral()
+    // ...
+}
 ```
-implementation("garden.orto:ofm:0.1.2")
+
+Then, simply add the dependency to your common source-set dependencies
+
+```kotlin
+commonMain {
+    dependencies {
+        // ...
+        implementation("garden.orto:ofm:0.1.2")
+    }
+}
 ```
 
 ## Contributing
