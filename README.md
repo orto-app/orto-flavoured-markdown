@@ -40,7 +40,7 @@ For example:
 Add the following line to your `build.gradle.kts`:
 
 ```
-implementation("garden.orto:ofm:0.1.1")
+implementation("garden.orto:ofm:0.1.2")
 ```
 
 ## Contributing
