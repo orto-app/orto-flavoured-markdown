@@ -291,15 +291,9 @@ signing {
     sign(publishing.publications)
 }
 
+// Will be fixed in Kotlin 1.9
+// See https://youtrack.jetbrains.com/issue/KT-46466
 afterEvaluate {
-//    tasks.withType<Sign>().configureEach {
-//        onlyIf { !OFM.snapshot }
-//    }
-
-
-    // Will be fixed in Kotlin 1.9
-    // See https://youtrack.jetbrains.com/issue/KT-46466
-
     // Workaround from https://github.com/copper-leaf/gradle-convention-plugins/blob/main/src/main/kotlin/copper-leaf-publish.gradle.kts
     tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signAndroidReleasePublication") }
     tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signAndroidDebugPublication") }
@@ -355,6 +349,11 @@ afterEvaluate {
     tasks.getByName("publishMingwX64PublicationToMavenRepository") { dependsOn("signJvmPublication") }
     tasks.getByName("publishMingwX64PublicationToMavenRepository") { dependsOn("signLinuxX64Publication") }
 
+    tasks.getByName("compileTestKotlinLinuxX64") { dependsOn("signLinuxX64Publication") }
+    tasks.getByName("linkDebugTestLinuxX64") { dependsOn("signLinuxX64Publication") }
+
+    tasks.getByName("compileTestKotlinMingwX64") { dependsOn("signMingwX64Publication") }
+    tasks.getByName("linkDebugTestMingwX64") { dependsOn("signMingwX64Publication") }
 
     if (os.isMacOsX) {
         tasks.getByName("publishIosArm64PublicationToMavenRepository") { dependsOn("signIosSimulatorArm64Publication") }
@@ -364,6 +363,8 @@ afterEvaluate {
         tasks.getByName("publishIosArm64PublicationToMavenRepository") { dependsOn("signAndroidDebugPublication") }
         tasks.getByName("publishIosArm64PublicationToMavenRepository") { dependsOn("signJvmPublication") }
         tasks.getByName("publishIosArm64PublicationToMavenRepository") { dependsOn("signJsPublication") }
+        tasks.getByName("publishIosArm64PublicationToMavenRepository") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("publishIosArm64PublicationToMavenRepository") { dependsOn("signMacosArm64Publication") }
 
         tasks.getByName("publishIosSimulatorArm64PublicationToMavenRepository") { dependsOn("signIosArm64Publication") }
         tasks.getByName("publishIosSimulatorArm64PublicationToMavenRepository") { dependsOn("signIosX64Publication") }
@@ -372,14 +373,189 @@ afterEvaluate {
         tasks.getByName("publishIosSimulatorArm64PublicationToMavenRepository") { dependsOn("signAndroidReleasePublication") }
         tasks.getByName("publishIosSimulatorArm64PublicationToMavenRepository") { dependsOn("signAndroidDebugPublication") }
         tasks.getByName("publishIosSimulatorArm64PublicationToMavenRepository") { dependsOn("signKotlinMultiplatformPublication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenRepository") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenRepository") { dependsOn("signMacosArm64Publication") }
 
         tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signIosSimulatorArm64Publication") }
         tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signIosArm64Publication") }
+        tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signIosX64Publication") }
         tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signKotlinMultiplatformPublication") }
         tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signAndroidReleasePublication") }
         tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signAndroidDebugPublication") }
         tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signJvmPublication") }
         tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signJsPublication") }
+        tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("publishIosX64PublicationToMavenRepository") { dependsOn("signMacosArm64Publication") }
+
+        tasks.getByName("publishMacosX64PublicationToMavenRepository") { dependsOn("signIosSimulatorArm64Publication") }
+        tasks.getByName("publishMacosX64PublicationToMavenRepository") { dependsOn("signIosArm64Publication") }
+        tasks.getByName("publishMacosX64PublicationToMavenRepository") { dependsOn("signIosX64Publication") }
+        tasks.getByName("publishMacosX64PublicationToMavenRepository") { dependsOn("signKotlinMultiplatformPublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenRepository") { dependsOn("signAndroidReleasePublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenRepository") { dependsOn("signAndroidDebugPublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenRepository") { dependsOn("signJvmPublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenRepository") { dependsOn("signJsPublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenRepository") { dependsOn("signMacosArm64Publication") }
+
+        tasks.getByName("publishMacosArm64PublicationToMavenRepository") { dependsOn("signIosSimulatorArm64Publication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenRepository") { dependsOn("signIosArm64Publication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenRepository") { dependsOn("signIosX64Publication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenRepository") { dependsOn("signKotlinMultiplatformPublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenRepository") { dependsOn("signAndroidReleasePublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenRepository") { dependsOn("signAndroidDebugPublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenRepository") { dependsOn("signJvmPublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenRepository") { dependsOn("signJsPublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenRepository") { dependsOn("signMacosX64Publication") }
+
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signIosSimulatorArm64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signIosArm64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signIosX64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signMacosArm64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signAndroidReleasePublication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signAndroidDebugPublication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signJvmPublication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signJsPublication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenRepository") { dependsOn("signMacosX64Publication") }
+
+        tasks.getByName("compileTestKotlinMacosX64") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("linkDebugTestMacosX64") { dependsOn("signMacosX64Publication") }
+
+    }
+
+    tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+    tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+    tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signJvmPublication") }
+    tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+    tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signJsPublication") }
+    tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+
+    tasks.getByName("publishAndroidDebugPublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+    tasks.getByName("publishAndroidDebugPublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+    tasks.getByName("publishAndroidDebugPublicationToMavenLocal") { dependsOn("signJvmPublication") }
+    tasks.getByName("publishAndroidDebugPublicationToMavenLocal") { dependsOn("signJsPublication") }
+    tasks.getByName("publishAndroidDebugPublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+    tasks.getByName("publishAndroidDebugPublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+
+    tasks.getByName("publishAndroidReleasePublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+    tasks.getByName("publishAndroidReleasePublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+    tasks.getByName("publishAndroidReleasePublicationToMavenLocal") { dependsOn("signJvmPublication") }
+    tasks.getByName("publishAndroidReleasePublicationToMavenLocal") { dependsOn("signJsPublication") }
+    tasks.getByName("publishAndroidReleasePublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+    tasks.getByName("publishAndroidReleasePublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+
+    tasks.getByName("publishJsPublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+    tasks.getByName("publishJsPublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+    tasks.getByName("publishJsPublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+    tasks.getByName("publishJsPublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+    tasks.getByName("publishJsPublicationToMavenLocal") { dependsOn("signJvmPublication") }
+    tasks.getByName("publishJsPublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+
+    tasks.getByName("publishJvmPublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+    tasks.getByName("publishJvmPublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+    tasks.getByName("publishJvmPublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+    tasks.getByName("publishJvmPublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+    tasks.getByName("publishJvmPublicationToMavenLocal") { dependsOn("signJsPublication") }
+    tasks.getByName("publishJvmPublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+
+    tasks.getByName("publishLinuxX64PublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+    tasks.getByName("publishLinuxX64PublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+    tasks.getByName("publishLinuxX64PublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+    tasks.getByName("publishLinuxX64PublicationToMavenLocal") { dependsOn("signJsPublication") }
+    tasks.getByName("publishLinuxX64PublicationToMavenLocal") { dependsOn("signJvmPublication") }
+    tasks.getByName("publishLinuxX64PublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+    tasks.getByName("publishMingwX64PublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+    tasks.getByName("publishMingwX64PublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+    tasks.getByName("publishMingwX64PublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+    tasks.getByName("publishMingwX64PublicationToMavenLocal") { dependsOn("signJsPublication") }
+    tasks.getByName("publishMingwX64PublicationToMavenLocal") { dependsOn("signJvmPublication") }
+    tasks.getByName("publishMingwX64PublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+
+
+    if (os.isMacOsX) {
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signIosSimulatorArm64Publication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signIosX64Publication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signJvmPublication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signJsPublication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signMacosArm64Publication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+        tasks.getByName("publishIosArm64PublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signIosArm64Publication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signIosX64Publication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signJsPublication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signJvmPublication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signMacosArm64Publication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+        tasks.getByName("publishIosSimulatorArm64PublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signIosSimulatorArm64Publication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signIosArm64Publication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signJvmPublication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signJsPublication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signMacosArm64Publication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+        tasks.getByName("publishIosX64PublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signIosSimulatorArm64Publication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signIosArm64Publication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signIosX64Publication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signJvmPublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signJsPublication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signMacosArm64Publication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+        tasks.getByName("publishMacosX64PublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signIosSimulatorArm64Publication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signIosArm64Publication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signIosX64Publication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signKotlinMultiplatformPublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signJvmPublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signJsPublication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+        tasks.getByName("publishMacosArm64PublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signIosSimulatorArm64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signIosArm64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signMacosArm64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signAndroidReleasePublication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signAndroidDebugPublication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signJvmPublication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signJsPublication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signIosX64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signLinuxX64Publication") }
+        tasks.getByName("publishKotlinMultiplatformPublicationToMavenLocal") { dependsOn("signMingwX64Publication") }
+
+
+        tasks.getByName("compileTestKotlinMacosX64") { dependsOn("signMacosX64Publication") }
+        tasks.getByName("linkDebugTestMacosX64") { dependsOn("signMacosX64Publication") }
+
+        tasks.getByName("compileTestKotlinIosX64") { dependsOn("signIosX64Publication") }
+        tasks.getByName("linkDebugTestIosX64") { dependsOn("signIosX64Publication") }
     }
 }
 

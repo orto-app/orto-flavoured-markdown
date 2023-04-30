@@ -1,5 +1,7 @@
 # Orto Flavoured Markdown
 
+[![Build and Test](https://github.com/orto-app/orto-flavoured-markdown/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/orto-app/orto-flavoured-markdown/actions/workflows/main.yml)
+
 This project implements an extension to [Github Flavoured Markdown](https://github.github.com/gfm/) to add `#tags`. A tag is any sequence of characters (except `\t`, `\n`, ` `, `#`, `\f` and `\r`) starting with a `#` character.
 
 Here is an example of an Orto Flavoured Markdown note:
@@ -35,7 +37,11 @@ For example:
 
 ## Add this library to your project
 
-TODO
+Add the following line to your `build.gradle.kts`:
+
+```
+implementation("garden.orto:ofm:0.1.1")
+```
 
 ## Contributing
 
