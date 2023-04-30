@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - sign_mac
     paths-ignore:
       - "**/*.md"
   pull_request:
@@ -15,6 +16,8 @@ env:
   XCODE_VERSION: '13.4.1'
   JAVA_VERSION: '11'
   JAVA_DISTRIBUTION: 'corretto'
+  ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
+  ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
 
 jobs:
   macos:
