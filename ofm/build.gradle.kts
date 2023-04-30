@@ -217,14 +217,14 @@ android {
 }
 
 
-// Add task dependencies
-if (ideaActive.not()) {
-//    2. Declare an explicit dependency on ':ofm:signIosSimulatorArm64Publication' from ':ofm:publishIosArm64PublicationToMavenRepository' using Task#dependsOn.
-//    3. Declare an explicit dependency on ':ofm:signIosSimulatorArm64Publication' from ':ofm:publishIosArm64PublicationToMavenRepository' using Task#mustRunAfter.
-    project.tasks.first { it.name.contains("publishIosArm64PublicationToMavenRepository") }.dependsOn(
-        project.tasks.first { it.name.contains("signIosSimulatorArm64Publication") }
-    )
-}
+//// Add task dependencies
+//if (ideaActive.not()) {
+////    2. Declare an explicit dependency on ':ofm:signIosSimulatorArm64Publication' from ':ofm:publishIosArm64PublicationToMavenRepository' using Task#dependsOn.
+////    3. Declare an explicit dependency on ':ofm:signIosSimulatorArm64Publication' from ':ofm:publishIosArm64PublicationToMavenRepository' using Task#mustRunAfter.
+//    project.tasks.first { it.name.contains("publishIosArm64PublicationToMavenRepository") }.dependsOn(
+//        project.tasks.first { it.name.contains("signIosSimulatorArm64Publication") }
+//    )
+//}
 
 // Will be fixed in Kotlin 1.9
 // See https://youtrack.jetbrains.com/issue/KT-55751

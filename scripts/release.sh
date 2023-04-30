@@ -4,6 +4,8 @@ set -eu
 
 myself="$(basename "$0")"
 version_file="$(pwd)/buildSrc/src/main/kotlin/Dependencies.kt"
+pom_version_file="$(pwd)/ofm/ofm.podspec"
+readme="$(pwd)/README.md"
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 current_commit="$(git log -1 --format='%H')"
 dryrun=0
@@ -39,6 +41,14 @@ set_snapshot() {
 
 set_version() {
   sed -i -E "s/const val baseVersion = \"$1\"/const val baseVersion = \"$2\"/g" "$version_file"
+}
+
+set_pom_version() {
+  sed -i -E "s/= '$1-SNAPSHOT'/= '$2'/g" "$pom_version_file"
+}
+
+set_pom_snapshot() {
+  sed -i -E "s/= '$1'/= '$2-SNAPSHOT'/g" "$pom_version_file"
 }
 
 check-dependencies() {
@@ -90,21 +100,29 @@ release-new-version() {
   [ "$dryrun" = "0" ] && set_version "$current" "$next"
   [ "$dryrun" = "0" ] && set_snapshot "false"
 
-  [ "$verbose" = "1" ] && echo "Committing ${version_file}"
-  [ "$dryrun" = "0" ] && git add "${version_file}" && git commit -m "Release v${next}."
+  [ "$verbose" = "1" ] && echo "Updating ${pom_version_file}..."
+  [ "$dryrun" = "0" ] && set_pom_version "$(pysemver bump patch "$current")" "$next"
+
+  [ "$verbose" = "1" ] && echo "Committing ${version_file} and ${pom_version_file}"
+  [ "$dryrun" = "0" ] && git add "${version_file}" "${pom_version_file}" && git commit -m "Release v${next}."
 
   [ "$verbose" = "1" ] && echo "Tagging Git HEAD with v${next}"
   [ "$dryrun" = "0" ] && git tag "v${next}" || true
 }
 
 release-new-snapshot() {
+  current="$(current-version)"
+  next="$(pysemver bump patch "$current")"
   echo "Update to SNAPSHOT version"
 
   [ "$verbose" = "1" ] && echo "Setting snapshot = true in ${version_file}..."
   [ "$dryrun" = "0" ] && set_snapshot "true"
 
-  [ "$verbose" = "1" ] && echo "Committing ${version_file}"
-  [ "$dryrun" = "0" ] && git add "${version_file}" && git commit -m "Release SNAPSHOT." || true
+  [ "$verbose" = "1" ] && echo "Setting snapshot = true in ${pom_version_file}..."
+  [ "$dryrun" = "0" ] && set_pom_snapshot "$current" "$next"
+
+  [ "$verbose" = "1" ] && echo "Committing ${version_file} and ${pom_version_file}"
+  [ "$dryrun" = "0" ] && git add "${version_file}" "${pom_version_file}" && git commit -m "Release SNAPSHOT." || true
 }
 
 parse-args() {
