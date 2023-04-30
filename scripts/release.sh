@@ -43,6 +43,10 @@ set_version() {
   sed -i -E "s/const val baseVersion = \"$1\"/const val baseVersion = \"$2\"/g" "$version_file"
 }
 
+set_readme_version() {
+  sed -i -E "s/orto:ofm:$1/orto:ofm:$2/" "$readme"
+}
+
 set_pom_version() {
   sed -i -E "s/= '$1-SNAPSHOT'/= '$2'/g" "$pom_version_file"
 }
@@ -103,8 +107,11 @@ release-new-version() {
   [ "$verbose" = "1" ] && echo "Updating ${pom_version_file}..."
   [ "$dryrun" = "0" ] && set_pom_version "$(pysemver bump patch "$current")" "$next"
 
-  [ "$verbose" = "1" ] && echo "Committing ${version_file} and ${pom_version_file}"
-  [ "$dryrun" = "0" ] && git add "${version_file}" "${pom_version_file}" && git commit -m "Release v${next}."
+  [ "$verbose" = "1" ] && echo "Updating ${readme}..."
+  [ "$dryrun" = "0" ] && set_readme_version "$current" "$next"
+
+  [ "$verbose" = "1" ] && echo "Committing ${readme}, ${version_file} and ${pom_version_file}"
+  [ "$dryrun" = "0" ] && git add "${readme}" "${version_file}" "${pom_version_file}" && git commit -m "Release v${next}."
 
   [ "$verbose" = "1" ] && echo "Tagging Git HEAD with v${next}"
   [ "$dryrun" = "0" ] && git tag "v${next}" || true
