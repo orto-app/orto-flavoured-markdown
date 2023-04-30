@@ -292,9 +292,11 @@ signing {
 }
 
 afterEvaluate {
-    tasks.withType<Sign>().configureEach {
-        onlyIf { !OFM.snapshot }
-    }
+//    tasks.withType<Sign>().configureEach {
+//        onlyIf { !OFM.snapshot }
+//    }
+
+
     // Will be fixed in Kotlin 1.9
     // See https://youtrack.jetbrains.com/issue/KT-46466
 
