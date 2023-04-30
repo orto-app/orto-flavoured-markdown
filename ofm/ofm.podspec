@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'ofm'
-    spec.version                  = '0.1.1-SNAPSHOT'
+    spec.version                  = '0.1.2-SNAPSHOT'
     spec.homepage                 = 'https://codeberg.org/uwutech/orto-flavoured-markdown'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
