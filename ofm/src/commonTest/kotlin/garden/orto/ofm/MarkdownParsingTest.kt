@@ -68,7 +68,15 @@ class MarkdownParsingTest : TestCase() {
 
     @Test
     fun testTagsIntegration() =
-        fileTestCase("test.md", setOf(",", "parole,", "tag,", "anche", "in/mezzo.", "tanti", "test/esaus", "tivi"))
+        stringTestCase("# HEADER 1\n" +
+                "\n" +
+                "Paragrafo di #parole, ma con dei #tag,#anche fasulli #in/mezzo. Dovremmo mettere #tanti#, esempi di \n" +
+                "\n" +
+                "- modo\n" +
+                "- da\n" +
+                "- fare\n" +
+                "- #test/esaus#tivi",
+            setOf(",", "parole,", "tag,", "anche", "in/mezzo.", "tanti", "test/esaus", "tivi"))
 
     @Test
     fun testGetTagsEmptyTag() = stringTestCase(
