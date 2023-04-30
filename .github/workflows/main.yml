@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - sign_mac
     paths-ignore:
       - "**/*.md"
   pull_request:

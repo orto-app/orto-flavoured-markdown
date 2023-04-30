@@ -1,5 +1,5 @@
 object OFM {
-    private const val baseVersion = "0.1.2"
+    private const val baseVersion = "0.1.1"
     const val snapshot = true
     const val group = "garden.orto"
     var version = if (snapshot) {
