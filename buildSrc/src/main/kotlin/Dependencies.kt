@@ -1,6 +1,6 @@
 object OFM {
-    private const val baseVersion = "0.1.0"
-    const val snapshot = true
+    private const val baseVersion = "0.1.1"
+    const val snapshot = false
     const val group = "garden.orto"
     var version = if (snapshot) {
         baseVersion.substringBefore("-").split('.').let { (major, minor, patch) ->
